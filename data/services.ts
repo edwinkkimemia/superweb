@@ -114,3 +114,17 @@ export const SERVICE_OPTIONS = [
   "IT Support & Maintenance",
   "Graphic & Visual Design",
 ];
+
+/** Maps a service page slug → the form dropdown option preselected on that page. */
+export const SERVICE_FORM_OPTION: Record<string, string> = {
+  "business-websites": "Business Website Design",
+  ecommerce: "Ecommerce Website Development",
+  "ai-solutions": "AI Solutions — Chatbots & Automation",
+  seo: "SEO Services Kenya",
+  "web-applications": "Web Application Development",
+  "care-plans": "Website Maintenance",
+  "mobile-apps": "Mobile App Development",
+  cybersecurity: "Cybersecurity Services",
+  "it-support": "IT Support & Maintenance",
+  "graphic-design": "Graphic & Visual Design",
+};

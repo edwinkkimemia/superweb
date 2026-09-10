@@ -8,7 +8,16 @@ import { SERVICE_OPTIONS } from "@/data/services";
 
 const BUDGET_OPTIONS = ["KSh 35k — 80k", "KSh 80k — 200k", "KSh 200k — 500k", "KSh 500k+", "Need advice"];
 
-export default function LeadForm({ source, compact = false }: { source: string; compact?: boolean }) {
+export default function LeadForm({
+  source,
+  compact = false,
+  projectType,
+}: {
+  source: string;
+  compact?: boolean;
+  /** Preselects this option in the "Service needed" dropdown (e.g. from a service page). */
+  projectType?: string;
+}) {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
   const [refId, setRefId] = useState<number | null>(null);
@@ -96,7 +105,12 @@ export default function LeadForm({ source, compact = false }: { source: string; 
         </div>
         <div className="field">
           <label>Service needed</label>
-          <select name="projectType">
+          <select
+            name="projectType"
+            defaultValue={
+              projectType && SERVICE_OPTIONS.includes(projectType) ? projectType : SERVICE_OPTIONS[0]
+            }
+          >
             {SERVICE_OPTIONS.map((s) => (
               <option key={s}>{s}</option>
             ))}

@@ -4,9 +4,9 @@ import CtaBand from "@/components/ui/CtaBand";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Our Work – Website Design Portfolio Kenya",
+  title: "Our Work – Website Design, Apps & Branding Portfolio Kenya",
   description:
-    "See SuperWeb's website design portfolio Kenya: business websites Nairobi, ecommerce stores with M-Pesa, corporate redesigns & web portals. Your project could be next — 0715135141.",
+    "See SuperWeb's portfolio Kenya: business websites, ecommerce with M-Pesa, mobile apps, cybersecurity, IT support & branding projects. Your project could be next — 0715135141.",
   alternates: { canonical: `${SITE_URL}/work` },
 };
 
@@ -16,6 +16,10 @@ const PROJECTS = [
   { img: "/images/work-hotel.jpg", alt: "Hotel website design Kenya with booking system", tag: "Hospitality · Booking", t: "Boutique Hotel Website + Booking", d: "Hotel website design Kenya with rooms, gallery, M-Pesa deposits & WhatsApp booking." },
   { img: "/images/work-arch.jpg", alt: "Architecture company website design Kenya", tag: "Professional · Redesign", t: "Architecture Firm Redesign", d: "Rescued a 2014-era site into a fast corporate portfolio with preserved Google rankings." },
   { img: "/images/service-ai.jpg", alt: "AI chatbot for Kenyan business", tag: "AI Solutions · Nairobi", t: "WhatsApp AI Assistant — Auto Lead Capture", d: "AI chatbot trained on business FAQs. Answers instantly in English & Swahili, books appointments & sends hot leads to WhatsApp. Result: 0 missed enquiries." },
+  { img: "/images/service-apps.jpg", alt: "Mobile app development Kenya - retail ordering app", tag: "Mobile Apps · Android & iOS", t: "Retail Ordering App — Android & iOS", d: "Mobile app development Kenya: product catalogue, M-Pesa STK Push in-app, order tracking & push notifications. Published to Play Store & App Store with staff training." },
+  { img: "/images/service-care.jpg", alt: "Cybersecurity audit and website hardening Kenya", tag: "Cybersecurity · Audit", t: "SACCO Portal Security Audit & Hardening", d: "Cybersecurity services Kenya: full audit, malware cleanup, firewall, 2FA & monitored backups. Result: zero incidents in 12 months." },
+  { img: "/images/contact-office.jpg", alt: "Managed IT support for Nairobi office", tag: "IT Support · Managed IT", t: "Law Firm Managed IT Support", d: "IT support Kenya: office network, business email, laptops, printers & automatic backups — with same-day Nairobi response on contract." },
+  { img: "/images/service-business.jpg", alt: "Company rebranding and visual identity Kenya", tag: "Branding · Visual Design", t: "Logistics Company Rebrand & Visual Kit", d: "Graphic & visual design Kenya: logo, colours, stationery, social media kit & vehicle branding. One identity across print, web and social." },
 ];
 
 export default function WorkPage() {
@@ -23,11 +27,12 @@ export default function WorkPage() {
     <section className="section" style={{ paddingTop: 40 }}>
       <div className="wrap">
         <div className="crumbs"><Link href="/">Home</Link> / Our Work</div>
-        <p className="kicker">Website design portfolio Kenya</p>
-        <h1 className="h2">Recent Website Design Projects in Kenya</h1>
+        <p className="kicker">Websites, apps, security & branding portfolio Kenya</p>
+        <h1 className="h2">Recent Projects: Websites, Apps & Brand Work in Kenya</h1>
         <p className="lead">
-          A sample of <strong>business websites, ecommerce stores &amp; corporate redesigns</strong> delivered by
-          Nairobi&apos;s SuperWeb team. Every project: mobile-first, SEO-ready, M-Pesa capable.
+          A sample of <strong>business websites, ecommerce stores, mobile apps, cybersecurity audits, IT
+          support contracts &amp; rebrands</strong> delivered by Nairobi&apos;s SuperWeb team. Every project:
+          mobile-first, secure, and built to bring customers.
         </p>
         <div className="work-grid">
           {PROJECTS.map((p) => (

@@ -43,9 +43,15 @@ export default function AdminSettings() {
     setSaved("Reset to defaults.");
   }
 
-  function onLogout() {
+  async function onLogout() {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch {
+      /* cookie clears on next login anyway */
+    }
     clearAdminToken();
     router.push("/admin/login");
+    router.refresh();
   }
 
   if (checking) return <p className="lead">Checking access…</p>;
@@ -112,9 +118,9 @@ export default function AdminSettings() {
         <div className="card" style={{ marginTop: 18 }}>
           <h3>🔐 Security</h3>
           <p style={{ color: "var(--muted)", fontSize: 14 }}>
-            Signed in with token: <code>{currentToken ? `${currentToken.slice(0, 6)}••••` : "(dev mode)"}</code>.
-            Set <code>ADMIN_TOKEN</code> in <code>.env</code> to lock the API in production. Tokens are stored
-            only in this browser.
+            Signed in{currentToken ? <> with token <code>{`${currentToken.slice(0, 6)}••••`}</code></> : " (dev mode)"}.
+            Pages are locked server-side — set <code>ADMIN_TOKEN</code> in <code>.env</code> to enforce it
+            in production.
           </p>
           <div style={{ display: "flex", gap: 10, marginTop: 14, flexWrap: "wrap" }}>
             <button type="submit" className="btn btn-navy btn-sm">

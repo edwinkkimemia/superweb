@@ -20,9 +20,15 @@ export default function AdminShell({
   const pathname = usePathname();
   const router = useRouter();
 
-  function lock() {
+  async function lock() {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } catch {
+      /* cookie clears on next login anyway */
+    }
     clearAdminToken();
     router.push("/admin/login");
+    router.refresh();
   }
 
   function exportCsv() {

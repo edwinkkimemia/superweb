@@ -5,6 +5,7 @@ import LeadForm from "@/components/forms/LeadForm";
 import Faq from "@/components/ui/Faq";
 import CtaBand from "@/components/ui/CtaBand";
 import { getService, SERVICE_DETAILS } from "@/data/serviceDetails";
+import { SERVICE_FORM_OPTION } from "@/data/services";
 import { SITE_URL } from "@/lib/site";
 
 export async function generateStaticParams() {
@@ -61,7 +62,11 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 ⏱ {s.timeline} · {s.priceNote}
               </p>
               <div style={{ marginTop: 12 }}>
-                <LeadForm source={`/services/${s.slug}`} compact />
+                <LeadForm
+                  source={`/services/${s.slug}`}
+                  compact
+                  projectType={SERVICE_FORM_OPTION[s.slug]}
+                />
               </div>
             </div>
           </div>

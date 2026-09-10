@@ -185,13 +185,25 @@ export async function updateLeadStatus(id: number, status: string): Promise<Lead
   return toLead(result.rows[0]);
 }
 
+function getCookie(req: Request, name: string): string {
+  const header = req.headers.get("cookie") ?? "";
+  for (const part of header.split(";")) {
+    const idx = part.indexOf("=");
+    if (idx === -1) continue;
+    if (part.slice(0, idx).trim() === name) return decodeURIComponent(part.slice(idx + 1).trim());
+  }
+  return "";
+}
+
 export function isAdminAuthorized(req: Request): boolean {
   const token = process.env.ADMIN_TOKEN ?? "";
   if (!token) return true; // dev mode
   const url = new URL(req.url);
   const q = url.searchParams.get("token") ?? "";
   const h = req.headers.get("x-admin-token") ?? "";
-  return q === token || h === token;
+  if (q === token || h === token) return true;
+  // Accept the httpOnly session cookie set by /api/admin/login.
+  return getCookie(req, "sw_admin") === token;
 }
 
 // Simple in-memory rate limit for lead submissions.

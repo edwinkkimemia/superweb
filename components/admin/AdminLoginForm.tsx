@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { adminHeaders, getAdminToken, setAdminToken, withTokenQuery } from "@/lib/admin";
+import { getAdminToken, setAdminToken } from "@/lib/admin";
 
 export default function AdminLoginForm() {
   const router = useRouter();
@@ -21,12 +21,17 @@ export default function AdminLoginForm() {
     setBusy(true);
     setMsg("Unlocking…");
     try {
-      const res = await fetch(withTokenQuery("/api/stats", t), { headers: adminHeaders(t) });
-      if (res.status === 401) throw new Error("Invalid token. Ask your developer for ADMIN_TOKEN.");
-      if (!res.ok) throw new Error("Could not reach the API.");
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: t }),
+      });
+      const json = (await res.json()) as { ok: boolean; error?: string };
+      if (!res.ok || !json.ok) throw new Error(json.error ?? "Login failed.");
       setAdminToken(t);
       setMsg("");
       router.push("/admin/overview");
+      router.refresh();
     } catch (err) {
       setMsg(err instanceof Error ? err.message : "Login failed.");
     } finally {
@@ -38,7 +43,7 @@ export default function AdminLoginForm() {
     <div className="login-card">
       <h3>🔐 Admin access</h3>
       <p style={{ color: "var(--muted)", fontSize: 14, margin: "6px 0 14px" }}>
-        Enter your admin token. It is stored only in this browser.
+        Sign in with your admin token. A secure session keeps you logged in on this browser.
       </p>
       <form onSubmit={(e) => void unlock(e)}>
         <div className="field">

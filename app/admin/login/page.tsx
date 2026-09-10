@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
 import { SITE_URL } from "@/lib/site";
+import { ADMIN_COOKIE } from "@/lib/adminCookie";
 
 export const metadata: Metadata = {
   title: "Admin Login – SuperWeb CRM",
@@ -11,6 +14,11 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLoginPage() {
+  const serverToken = process.env.ADMIN_TOKEN ?? "";
+  const cookie = cookies().get(ADMIN_COOKIE)?.value ?? "";
+  const loggedIn = serverToken ? cookie !== "" && cookie === serverToken : cookie !== "";
+  if (loggedIn) redirect("/admin/overview");
+
   return (
     <>
       <div className="crumbs">
