@@ -8,7 +8,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Website Design Kenya | Web Design Nairobi – SuperWeb #1 Web Development Company Kenya",
   description:
-    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce website development Kenya, AI solutions, SEO services Kenya & web applications. Get a free quote: 0715135141.",
+    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce, AI solutions, SEO, mobile apps, cybersecurity, IT support & graphic design. Get a free quote: 0715135141.",
   keywords: [
     "website design Kenya",
     "web design Nairobi",
@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     "AI solutions Kenya",
     "AI chatbot Kenya",
     "SEO services Kenya",
+    "mobile app development Kenya",
+    "cybersecurity Kenya",
+    "IT support Kenya",
+    "graphic design Kenya",
     "website design prices Kenya",
   ],
   alternates: { canonical: `${SITE_URL}/` },
@@ -100,7 +104,7 @@ export default function HomePage() {
           <p className="lead">
             Stop losing customers to competitors with better websites. SuperWeb is a{" "}
             <strong>web development company in Kenya</strong> offering everything your business needs to win
-            online — design, development, ecommerce, AI solutions, SEO and maintenance.
+            online — websites, ecommerce, AI, SEO, mobile apps, cybersecurity, IT support and design.
           </p>
           <div className="grid-3">
             {[
@@ -110,6 +114,10 @@ export default function HomePage() {
               { img: "/images/service-seo.jpg", alt: "SEO services Kenya", icon: "🚀", t: "SEO Services Kenya", d: 'Rank #1 on Google for "your service + Nairobi/Kenya". Keyword research, on-page SEO, Google Business Profile & monthly reports.', href: "/services/seo", cta: "Learn more →" },
               { img: "/images/service-apps.jpg", alt: "Web application development Kenya", icon: "⚙️", t: "Web Application Development", d: "Custom portals, booking systems, school & hospital management, SACCO systems — built on TypeScript + PostgreSQL.", href: "/services/web-applications", cta: "Learn more →" },
               { img: "/images/service-care.jpg", alt: "Website maintenance Kenya", icon: "🛡️", t: "Website Maintenance Kenya", d: "Monthly updates, backups, security & content changes from KSh 5,000/month. Never worry about hacking or downtime.", href: "/services/care-plans", cta: "Learn more →" },
+              { img: "/images/service-apps.jpg", alt: "Mobile app development Kenya", icon: "📱", t: "Mobile App Development", d: "Android & iOS business apps with M-Pesa from KSh 350,000. Design, build, testing and Play Store launch handled.", href: "/services/mobile-apps", cta: "Learn more →" },
+              { img: "/images/service-care.jpg", alt: "Cybersecurity services Kenya", icon: "🔒", t: "Cybersecurity Services", d: "Audits, malware cleanup, hardening and monitoring from KSh 45,000. Keep your business safe from hackers.", href: "/services/cybersecurity", cta: "Learn more →" },
+              { img: "/images/service-business.jpg", alt: "IT support Kenya", icon: "🖥️", t: "IT Support & Managed IT", d: "Computers, networks, email and backups from KSh 20,000/month. Reliable on-call help for offices and schools.", href: "/services/it-support", cta: "Learn more →" },
+              { img: "/images/work-fashion.jpg", alt: "Graphic and visual design Kenya", icon: "🎨", t: "Graphic & Visual Design", d: "Logos, branding, social kits and print from KSh 15,000. Visuals that make your business impossible to ignore.", href: "/services/graphic-design", cta: "Learn more →" },
             ].map((c) => (
               <div className="card" key={c.t}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

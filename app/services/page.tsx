@@ -4,9 +4,9 @@ import CtaBand from "@/components/ui/CtaBand";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Our Services – Website Design, Ecommerce, AI & SEO Kenya",
+  title: "Our Services – Websites, Apps, Cybersecurity, IT & Design Kenya",
   description:
-    "Full list of SuperWeb services: business website design Kenya, ecommerce website development Kenya, AI solutions Nairobi, SEO services, company rebranding, web applications & maintenance. Prices from KSh 35,000.",
+    "Full list of SuperWeb services: business websites, ecommerce, AI solutions, SEO, web applications, mobile apps, cybersecurity, IT support, graphic & visual design and maintenance. Prices in KSh.",
   alternates: { canonical: `${SITE_URL}/services` },
 };
 
@@ -16,8 +16,11 @@ const SERVICES = [
   { id: "ai-solutions", img: "/images/service-ai.jpg", alt: "AI solutions Kenya", icon: "🤖", t: "3. AI Solutions — Chatbots & Automation", d: "From KSh 60,000 · 2–4 weeks. WhatsApp AI assistants that answer questions & capture leads 24/7, AI search, review replies & sales automation for Kenyan businesses.", cta: "Explore AI solutions →", href: "/services/ai-solutions" },
   { id: "seo", img: "/images/service-seo.jpg", alt: "SEO services Kenya", icon: "🚀", t: "4. SEO Services Kenya — Rank #1 on Google", d: "From KSh 25,000/month. Keyword strategy, technical fixes, content, Google Business Profile & backlinks. Monthly ranking reports. Cancel anytime.", cta: "View service →", href: "/services/seo" },
   { id: "web-applications", img: "/images/service-apps.jpg", alt: "Web application development Kenya", icon: "⚙️", t: "5. Custom Web Applications & Portals", d: "From KSh 250,000. Booking systems, school portals, hospital records, SACCO dashboards — engineered in TypeScript + PostgreSQL.", cta: "View service →", href: "/services/web-applications" },
-  { id: "redesign", img: "/images/work-arch.jpg", alt: "Website redesign Kenya", icon: "🎨", t: "6. Website Redesign & Rebranding", d: "From KSh 45,000. We rescue slow, ugly, non-mobile Kenyan company websites. SEO preservation, fresh luxurious look in 3 weeks.", cta: "See redesigns →", href: "/work" },
-  { id: "care", img: "/images/service-care.jpg", alt: "Website maintenance Kenya", icon: "🛡️", t: "7. Website Maintenance & Hosting Kenya", d: "From KSh 5,000/month. Updates, daily backups, uptime monitoring, hacking recovery & .co.ke domain management.", cta: "View service →", href: "/services/care-plans" },
+  { id: "mobile-apps", img: "/images/service-apps.jpg", alt: "Mobile app development Kenya", icon: "📱", t: "6. Mobile App Development — Android & iOS", d: "From KSh 350,000 · 8–16 weeks. Business apps, ecommerce apps with M-Pesa, booking apps and portals. Play Store & App Store launch handled.", cta: "View service →", href: "/services/mobile-apps" },
+  { id: "cybersecurity", img: "/images/service-care.jpg", alt: "Cybersecurity services Kenya", icon: "🔒", t: "7. Cybersecurity — Audits & Protection", d: "From KSh 45,000. Security audits, malware cleanup, hardening, SSL, backups, staff training and 24/7 monitoring for Kenyan SMEs and corporates.", cta: "View service →", href: "/services/cybersecurity" },
+  { id: "it-support", img: "/images/service-business.jpg", alt: "IT support Kenya", icon: "🖥️", t: "8. IT Support & Managed IT Services", d: "From KSh 20,000/month. Computers, networks, Wi-Fi, business email, backups and on-call help for offices, schools and clinics.", cta: "View service →", href: "/services/it-support" },
+  { id: "graphic-design", img: "/images/work-fashion.jpg", alt: "Graphic and visual design Kenya", icon: "🎨", t: "9. Graphic & Visual Design — Branding", d: "From KSh 15,000. Logos, brand kits, social media kits, packaging, company profiles and print design. You own all source files.", cta: "View service →", href: "/services/graphic-design" },
+  { id: "care", img: "/images/service-care.jpg", alt: "Website maintenance Kenya", icon: "🛡️", t: "10. Website Maintenance & Hosting Kenya", d: "From KSh 5,000/month. Updates, daily backups, uptime monitoring, hacking recovery & .co.ke domain management.", cta: "View service →", href: "/services/care-plans" },
 ];
 
 export default function ServicesPage() {

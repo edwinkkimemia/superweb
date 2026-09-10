@@ -20,7 +20,7 @@ export default function ContactPage() {
         <div className="gold-rule" />
         <p className="lead">
           Call, WhatsApp or send the form. A senior consultant replies with <strong>price, timeline and honest
-          advice</strong> for your <strong>website design, ecommerce, AI or SEO project in Kenya</strong>.
+          advice</strong> for your <strong>website, app, cybersecurity, IT support or design project in Kenya</strong>.
         </p>
         <div className="contact-grid">
           <div className="contact-info">

@@ -1,7 +1,11 @@
 {
+  "/work/page": "app/work/page.js",
   "/services/[slug]/page": "app/services/[slug]/page.js",
   "/page": "app/page.js",
+  "/api/stats/route": "app/api/stats/route.js",
+  "/api/leads/route": "app/api/leads/route.js",
+  "/admin/overview/page": "app/admin/overview/page.js",
+  "/admin/leads/page": "app/admin/leads/page.js",
   "/admin/page": "app/admin/page.js",
-  "/services/page": "app/services/page.js",
-  "/work/page": "app/work/page.js"
+  "/admin/settings/page": "app/admin/settings/page.js"
 }

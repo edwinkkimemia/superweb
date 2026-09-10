@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | SuperWeb Kenya",
   },
   description:
-    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce website development Kenya, AI solutions, SEO services Kenya & web applications.",
+    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce, AI solutions, SEO, mobile apps, cybersecurity, IT support and graphic design.",
   icons: { icon: FAVICON_SRC, apple: FAVICON_SRC },
 };
 

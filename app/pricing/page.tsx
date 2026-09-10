@@ -49,6 +49,10 @@ export default function PricingPage() {
         <div className="grid-2">
           <div className="card"><h3>🚀 SEO Retainer — Rank on Google Kenya</h3><p><strong>KSh 25,000 – 60,000/month.</strong> Keyword plan, 4 articles/mo, technical fixes, backlinks &amp; monthly reports.</p></div>
           <div className="card"><h3>🤖 AI Solutions — Chatbots &amp; Automation</h3><p><strong>KSh 60,000 – 150,000</strong> one-time + <strong>KSh 8,000/mo</strong> care. WhatsApp AI assistants, lead qualification &amp; review automation.</p><Link className="price-link" href="/services/ai-solutions">Explore AI →</Link></div>
+          <div className="card"><h3>📱 Mobile Apps — Android &amp; iOS</h3><p><strong>KSh 350,000+</strong> M-Pesa in-app payments, push notifications, offline-first. Play Store &amp; App Store launch handled.</p><Link className="price-link" href="/services/mobile-apps">View mobile apps →</Link></div>
+          <div className="card"><h3>🔒 Cybersecurity — Audits &amp; Protection</h3><p><strong>KSh 45,000 – 180,000.</strong> Security audits, malware cleanup, hardening, backups &amp; monitoring.</p><Link className="price-link" href="/services/cybersecurity">View cybersecurity →</Link></div>
+          <div className="card"><h3>🖥️ IT Support — Managed IT</h3><p><strong>KSh 20,000 – 80,000/month.</strong> Computers, networks, Wi-Fi, business email, backups &amp; on-call help.</p><Link className="price-link" href="/services/it-support">View IT support →</Link></div>
+          <div className="card"><h3>🎨 Graphic &amp; Visual Design</h3><p><strong>KSh 15,000 – 120,000.</strong> Logos, brand kits, social media kits, packaging &amp; print. You own all files.</p><Link className="price-link" href="/services/graphic-design">View design →</Link></div>
           <div className="card"><h3>🛡️ Care Plan — Maintenance &amp; Hosting</h3><p><strong>KSh 5,000 – 15,000/month.</strong> Updates, daily backups, security, uptime monitoring &amp; content changes.</p></div>
         </div>
         <CtaBand title="Need an exact figure today?" text="Fixed written quotation in 24 hours — valid 30 days." btnLabel="Get Exact Quote →" />

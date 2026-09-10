@@ -6,25 +6,40 @@ import { useState } from "react";
 import { EMAIL, LOGO_SRC, PHONE_DISPLAY, PHONE_HREF } from "@/lib/site";
 import { SERVICES } from "@/data/services";
 
-const DIRECT_SERVICES = [
-  { href: "/services/business-websites", label: "Websites" },
-  { href: "/services/ecommerce", label: "Ecommerce" },
-  { href: "/services/ai-solutions", label: "AI Solutions" },
-  { href: "/services/seo", label: "SEO" },
+/** Services pinned as individual navbar links (chosen by site owner). */
+const PINNED_SLUGS = [
+  "business-websites",
+  "ecommerce",
+  "ai-solutions",
+  "seo",
+  "mobile-apps",
+  "graphic-design",
 ];
+
+/** Short labels so six service links fit the navbar. */
+const SHORT_LABELS: Record<string, string> = {
+  "business-websites": "Websites",
+  ecommerce: "Ecommerce",
+  "ai-solutions": "AI Solutions",
+  seo: "SEO",
+  "mobile-apps": "Mobile Apps",
+  "graphic-design": "Graphics & Design",
+};
+
+const PINNED = PINNED_SLUGS.map(
+  (slug) => SERVICES.find((s) => s.slug === slug)!
+).filter(Boolean);
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [svcOpen, setSvcOpen] = useState(false);
-  const servicesActive = pathname.startsWith("/services");
 
   return (
     <>
       <div className="topbar">
         <div className="topbar-inner">
           <div>
-            📍 Nairobi, Kenya · Serving all Kenya &amp; Africa · ✉️ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            📍 Nairobi, Kenya · ✉️ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
           </div>
           <div className="tb-right">
             <span>Mon–Sat 8am–8pm EAT</span>
@@ -42,42 +57,16 @@ export default function Header() {
             ☰ Menu
           </button>
           <nav className={`main-nav${open ? " open" : ""}`} id="mainNav">
-            {DIRECT_SERVICES.map((l) => (
+            {PINNED.map((s) => (
               <Link
-                key={l.label}
-                href={l.href}
-                className={pathname === l.href ? "active" : ""}
+                key={s.slug}
+                href={s.href}
+                className={pathname === s.href ? "active" : ""}
                 onClick={() => setOpen(false)}
               >
-                {l.label}
+                {SHORT_LABELS[s.slug] ?? s.label}
               </Link>
             ))}
-            <div
-              className={`nav-item${servicesActive ? " active-parent" : ""}`}
-              onMouseEnter={() => setSvcOpen(true)}
-              onMouseLeave={() => setSvcOpen(false)}
-            >
-              <Link
-                href="/services"
-                className={servicesActive ? "active" : ""}
-                onClick={() => setOpen(false)}
-                aria-haspopup="true"
-                aria-expanded={svcOpen}
-              >
-                All Services ▾
-              </Link>
-              <div className={`nav-drop${svcOpen || open ? " show" : ""}`}>
-                {SERVICES.map((s) => (
-                  <Link key={s.slug} href={s.href} onClick={() => setOpen(false)}>
-                    <span className="nd-icon">{s.icon}</span>
-                    <span>
-                      <strong>{s.label}</strong>
-                      <small>{s.short}</small>
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
             <Link
               href="/work"
               className={pathname.startsWith("/work") ? "active" : ""}

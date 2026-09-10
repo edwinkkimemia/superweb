@@ -12,8 +12,8 @@ export default function Footer() {
               <img src={LOGO_SRC} alt="SuperWeb" className="footer-logo" />
             </div>
             <p style={{ marginTop: 12, fontSize: 14 }}>
-              Nairobi&apos;s results-driven <strong>website design company in Kenya</strong>. Business websites,
-              ecommerce, AI solutions, SEO &amp; web apps. Call{" "}
+              Nairobi&apos;s results-driven <strong>website design company in Kenya</strong>. Websites,
+              ecommerce, AI, SEO, mobile apps, cybersecurity, IT support &amp; branding. Call{" "}
               <Link href={PHONE_HREF} style={{ display: "inline", color: "#fff", fontWeight: 800 }}>
                 {PHONE_DISPLAY}
               </Link>
@@ -38,8 +38,12 @@ export default function Footer() {
             <Link href="/services">Website Design Kenya</Link>
             <Link href="/services">Ecommerce Development</Link>
             <Link href="/services/ai-solutions">🤖 AI Solutions</Link>
-            <Link href="/services">SEO Services Kenya</Link>
-            <Link href="/services">Web Applications</Link>
+            <Link href="/services/seo">SEO Services Kenya</Link>
+            <Link href="/services/web-applications">Web Applications</Link>
+            <Link href="/services/mobile-apps">📱 Mobile Apps</Link>
+            <Link href="/services/cybersecurity">🔒 Cybersecurity</Link>
+            <Link href="/services/it-support">🖥️ IT Support</Link>
+            <Link href="/services/graphic-design">🎨 Graphic & Visual Design</Link>
             <Link href="/pricing">Website Prices Kenya</Link>
           </div>
           <div>
@@ -48,7 +52,7 @@ export default function Footer() {
             <Link href="/pricing">Pricing</Link>
             <Link href="/about">About Us</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/admin">Client Login</Link>
+            <Link href="/admin/login">Client Login</Link>
           </div>
           <div>
             <h4>Schedule a Meeting</h4>
