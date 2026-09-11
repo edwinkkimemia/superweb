@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { isAdminAuthorized, listLeads } from "@/lib/db";
 
+// Serve per request — never statically export (needs DB + auth at runtime).
+export const dynamic = "force-dynamic";
+
 function csvCell(v: unknown): string {
   const s = String(v ?? "");
   return `"${s.replace(/"/g, '""')}"`;
