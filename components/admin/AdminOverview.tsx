@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
-import { useAdminGuard } from "@/components/admin/AdminGuard";
+import { AdminGateError, useAdminGuard } from "@/components/admin/AdminGuard";
 import type { LeadStats } from "@/lib/types";
 
 function pill(s: string) {
@@ -20,7 +20,7 @@ function pill(s: string) {
 }
 
 export default function AdminOverview() {
-  const { checking, db } = useAdminGuard();
+  const { checking, db, error: guardError } = useAdminGuard();
   const [stats, setStats] = useState<LeadStats | null>(null);
   const [error, setError] = useState("");
 
@@ -42,6 +42,7 @@ export default function AdminOverview() {
   }
 
   if (checking) return <p className="lead">Checking access…</p>;
+  if (guardError) return <AdminGateError message={guardError} />;
 
   const winRate =
     stats && stats.total > 0 ? `${Math.round(((stats.byStatus["won"] ?? 0) / stats.total) * 100)}%` : "—";

@@ -57,8 +57,8 @@ superweb/
 
 ## Admin dashboard
 
-1. Set `ADMIN_TOKEN` in `.env`.
-2. Open `http://localhost:3000/admin`, paste the token.
+1. Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` (or leave both empty for open dev mode).
+2. Open `http://localhost:3000/admin`, sign in with email + password.
 3. Stats, search/filter, stage updates (new → contacted → quoted → won/lost), CSV export.
 
 Without `DATABASE_URL` the API runs in memory mode. With Postgres:

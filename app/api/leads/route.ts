@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { createLead, isAdminAuthorized, listLeads, rateLimited, updateLeadStatus, validateLead } from "@/lib/db";
+import { createLead, isRequestAuthorized, listLeads, rateLimited, updateLeadStatus, validateLead } from "@/lib/db";
 
 // Serve per request — never statically export (needs DB + auth at runtime).
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-  if (!isAdminAuthorized(req)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized. Invalid admin token." }, { status: 401 });
+  if (!(await isRequestAuthorized(req))) {
+    return NextResponse.json({ ok: false, error: "Unauthorized. Please sign in again." }, { status: 401 });
   }
   const leads = await listLeads(200);
   return NextResponse.json({ ok: true, leads });
@@ -48,8 +48,8 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  if (!isAdminAuthorized(req)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized. Invalid admin token." }, { status: 401 });
+  if (!(await isRequestAuthorized(req))) {
+    return NextResponse.json({ ok: false, error: "Unauthorized. Please sign in again." }, { status: 401 });
   }
   let body: Record<string, unknown> = {};
   try {

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
 import { SITE_URL } from "@/lib/site";
 import { ADMIN_COOKIE } from "@/lib/adminCookie";
+import { isValidAdminSession } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Admin Login – SuperWeb CRM",
@@ -13,11 +14,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLoginPage() {
-  const serverToken = process.env.ADMIN_TOKEN ?? "";
+export default async function AdminLoginPage() {
   const cookie = cookies().get(ADMIN_COOKIE)?.value ?? "";
-  const loggedIn = serverToken ? cookie !== "" && cookie === serverToken : cookie !== "";
-  if (loggedIn) redirect("/admin/overview");
+  if (await isValidAdminSession(cookie)) redirect("/admin/overview");
 
   return (
     <>
@@ -25,7 +24,7 @@ export default function AdminLoginPage() {
         <Link href="/">Home</Link> / <Link href="/admin">Admin</Link> / Login
       </div>
       <h1 className="h2">Admin Login</h1>
-      <p className="lead">Sign in with your admin token to access leads, stats and settings.</p>
+      <p className="lead">Sign in with your admin email and password.</p>
       <AdminLoginForm />
     </>
   );

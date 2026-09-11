@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
-import { isAdminAuthorized, updateLeadStatus } from "@/lib/db";
+import { isRequestAuthorized, updateLeadStatus } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
-  if (!isAdminAuthorized(req)) {
-    return NextResponse.json({ ok: false, error: "Unauthorized. Invalid admin token." }, { status: 401 });
+  if (!(await isRequestAuthorized(req))) {
+    return NextResponse.json({ ok: false, error: "Unauthorized. Please sign in again." }, { status: 401 });
   }
   const id = Number(params.id);
   if (!Number.isFinite(id)) {

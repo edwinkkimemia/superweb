@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
-import { useAdminGuard } from "@/components/admin/AdminGuard";
+import { AdminGateError, useAdminGuard } from "@/components/admin/AdminGuard";
 import { getAdminSettings } from "@/lib/admin";
 import type { Lead } from "@/lib/types";
 
@@ -23,7 +23,7 @@ function pill(s: string) {
 }
 
 export default function AdminLeads() {
-  const { checking, db } = useAdminGuard();
+  const { checking, db, error: guardError } = useAdminGuard();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [query, setQuery] = useState("");
   const [stageFilter, setStageFilter] = useState("");
@@ -61,6 +61,7 @@ export default function AdminLeads() {
   }
 
   if (checking) return <p className="lead">Checking access…</p>;
+  if (guardError) return <AdminGateError message={guardError} />;
 
   const limit = getAdminSettings().leadsPerPage || 50;
   const filtered = leads

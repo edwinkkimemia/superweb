@@ -20,6 +20,22 @@ CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_leads_email ON leads (email);
 CREATE INDEX IF NOT EXISTS idx_leads_status ON leads (status);
 
+CREATE TABLE IF NOT EXISTS admin_users (
+  email VARCHAR(180) PRIMARY KEY,
+  password_hash TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS admin_sessions (
+  id VARCHAR(128) PRIMARY KEY,
+  email VARCHAR(180) NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires ON admin_sessions (expires_at);
+
 CREATE TABLE IF NOT EXISTS projects (
   slug VARCHAR(80) PRIMARY KEY,
   title VARCHAR(120) NOT NULL,
