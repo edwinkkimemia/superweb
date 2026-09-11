@@ -13,6 +13,51 @@ export const WHATSAPP_LINK = `https://wa.me/${PHONE_INTL}?text=${encodeURICompon
   "Hi SuperWeb! I need a website for my business. Please send me a quote."
 )}`;
 
+const WA_SERVICE_LABEL: Record<string, string> = {
+  "business-websites": "a business website",
+  ecommerce: "an ecommerce website with M-Pesa",
+  "ai-solutions": "an AI chatbot for my business",
+  seo: "SEO services to rank on Google",
+  "web-applications": "a custom web application",
+  "care-plans": "a website care plan",
+  "mobile-apps": "a mobile app (Android & iOS)",
+  cybersecurity: "a cybersecurity audit",
+  "it-support": "managed IT support",
+  "graphic-design": "branding and visual design",
+};
+
+/** Prefilled WhatsApp message tailored to the page the visitor is on. */
+export function whatsappMessageFor(pathname: string): string {
+  const path = (pathname || "/").split("?")[0];
+  if (path === "/quote" || path.startsWith("/quote/"))
+    return "Hi SuperWeb! I'd like a free quote for my project. Here are my details:";
+  if (path === "/offer" || path.startsWith("/offer/"))
+    return "Hi SuperWeb! I'd like to claim my FREE homepage audit. My website is:";
+  if (path === "/schedule" || path.startsWith("/schedule/"))
+    return "Hi SuperWeb! I'd like to schedule a free consultation. I'm available:";
+  if (path === "/contact" || path.startsWith("/contact/"))
+    return "Hi SuperWeb! I have a question about your services.";
+  if (path === "/pricing" || path.startsWith("/pricing/"))
+    return "Hi SuperWeb! I saw your pricing and I'd like an exact quote for my project.";
+  if (path === "/work" || path.startsWith("/work/"))
+    return "Hi SuperWeb! I saw your portfolio and I want something similar for my business.";
+  if (path === "/about" || path.startsWith("/about/"))
+    return "Hi SuperWeb! I'd like to learn more about working with you.";
+  const svc = Object.keys(WA_SERVICE_LABEL).find(
+    (slug) => path === `/services/${slug}` || path.startsWith(`/services/${slug}/`)
+  );
+  if (svc)
+    return `Hi SuperWeb! I'm interested in ${WA_SERVICE_LABEL[svc]}. Please send me a quote.`;
+  if (path === "/services" || path.startsWith("/services/"))
+    return "Hi SuperWeb! I'd like help choosing the right service. My business needs:";
+  return "Hi SuperWeb! I need a website for my business. Please send me a quote.";
+}
+
+/** WhatsApp click-to-chat link with a page-aware prefilled message. */
+export function whatsappLinkFor(pathname: string): string {
+  return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(whatsappMessageFor(pathname))}`;
+}
+
 export interface SocialLink {
   label: string;
   href: string;

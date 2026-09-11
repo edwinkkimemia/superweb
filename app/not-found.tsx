@@ -10,7 +10,7 @@ export default function NotFound() {
         <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/" className="btn btn-navy">← Homepage</Link>
           <Link href="/pricing" className="btn btn-outline">Website Prices</Link>
-          <Link href="/contact" className="btn btn-primary">Get a Quote →</Link>
+          <Link href="/quote" className="btn btn-primary">Get a Quote →</Link>
         </div>
       </div>
     </section>

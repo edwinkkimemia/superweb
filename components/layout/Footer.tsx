@@ -58,7 +58,7 @@ export default function Footer() {
             <Link href="/schedule">📅 Book Free Consultation</Link>
             <Link href={PHONE_HREF}>Call: {PHONE_DISPLAY}</Link>
             <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link>
-            <Link href="/contact">Request Online →</Link>
+            <Link href="/quote">Request Online →</Link>
           </div>
         </div>
         <div className="footer-bottom">

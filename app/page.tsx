@@ -63,7 +63,7 @@ export default function HomePage() {
               <strong>KSh 35,000</strong> — SEO included, M-Pesa ready, delivered in 2–4 weeks.
             </p>
             <div className="hero-ctas">
-              <Link href="/contact" className="btn btn-primary">Get My Free Website Quote →</Link>
+              <Link href="/quote" className="btn btn-primary">Get My Free Website Quote →</Link>
               <Link href="/work" className="btn btn-outline" style={{ background: "#fff" }}>See Our Work</Link>
             </div>
             <div className="hero-proof">
@@ -151,6 +151,7 @@ export default function HomePage() {
             title="Is your current website costing you customers?"
             text="Get a FREE homepage audit + fixed quotation. Call 0715135141 or request online — reply in 24 hours."
             btnLabel="Claim Free Audit →"
+            btnHref="/offer"
           />
         </div>
       </section>

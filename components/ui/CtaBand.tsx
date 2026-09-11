@@ -4,7 +4,7 @@ export default function CtaBand({
   title,
   text,
   btnLabel = "Get Free Quote →",
-  btnHref = "/contact",
+  btnHref = "/quote",
 }: {
   title: string;
   text: string;

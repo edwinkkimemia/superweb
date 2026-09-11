@@ -14,7 +14,7 @@ const QUICK_REPLIES = ["Prices 💰", "AI Solutions 🤖", "Mobile Apps 📱", "
 function botReply(input: string): string {
   const t = input.toLowerCase();
   if (/(price|cost|charge|quote|much)/.test(t))
-    return "Websites from KSh 35,000, ecommerce from KSh 95,000, AI from KSh 60,000, mobile apps from KSh 350,000, cybersecurity from KSh 45,000, IT support from KSh 20,000/mo, design from KSh 15,000. Every quote is fixed in writing — want an exact figure?";
+    return "Websites from KSh 35,000, ecommerce from KSh 95,000, AI from KSh 60,000, mobile apps from KSh 350,000, cybersecurity from KSh 45,000, IT support from KSh 20,000/mo, design from KSh 15,000. Grab an exact fixed quote in 2 minutes at /quote — or tap 'Talk to human'.";
   if (/(ai|bot|automat|chatbot)/.test(t))
     return "Our AI assistants answer customers on WhatsApp 24/7 in English & Swahili, qualify leads and book appointments — from KSh 60,000. See /services/ai-solutions or tap 'Talk to human' for a free demo.";
   if (/(seo|google|rank)/.test(t))

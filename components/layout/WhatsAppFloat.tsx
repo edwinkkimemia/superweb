@@ -1,15 +1,22 @@
+"use client";
+
 import Link from "next/link";
-import { WHATSAPP_LINK } from "@/lib/site";
+import { usePathname } from "next/navigation";
+import { whatsappLinkFor, whatsappMessageFor } from "@/lib/site";
 
 export default function WhatsAppFloat() {
+  const pathname = usePathname();
+  const href = whatsappLinkFor(pathname ?? "/");
+  const label = whatsappMessageFor(pathname ?? "/");
+
   return (
     <Link
-      href={WHATSAPP_LINK}
+      href={href}
       target="_blank"
       rel="noopener"
       className="wa-float"
       aria-label="Chat to SuperWeb on WhatsApp"
-      title="Chat on WhatsApp"
+      title={label}
     >
       <span className="wa-pulse" aria-hidden="true" />
       <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">

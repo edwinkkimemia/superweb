@@ -28,7 +28,7 @@ export default function PricingPage() {
             <div className="amount">KSh 35,000 <small>one-time</small></div>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>For new SMEs, clinics, churches, personal brands.</p>
             <ul><li>Up to 5 pages</li><li>Mobile-first corporate design</li><li>WhatsApp chat + contact forms</li><li>Basic Google SEO setup</li><li>Training included</li><li>Delivery: 2 weeks</li></ul>
-            <Link href="/contact" className="btn btn-navy" style={{ justifyContent: "center" }}>Choose Starter →</Link>
+            <Link href="/quote" className="btn btn-navy" style={{ justifyContent: "center" }}>Choose Starter →</Link>
           </div>
           <div className="price-card featured">
             <div className="price-badge">MOST POPULAR ★</div>
@@ -36,14 +36,14 @@ export default function PricingPage() {
             <div className="amount">KSh 75,000 <small>one-time</small></div>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>For SMEs &amp; corporates that want Google customers.</p>
             <ul><li>Up to 15 pages + blog</li><li>Premium design + copywriting polish</li><li>Advanced SEO (10 keywords, schema)</li><li>Google Business Profile + Analytics</li><li>M-Pesa links + quote forms</li><li>1-year priority support</li><li>Delivery: 3 weeks</li></ul>
-            <Link href="/contact" className="btn btn-primary" style={{ justifyContent: "center" }}>Choose Business →</Link>
+            <Link href="/quote" className="btn btn-primary" style={{ justifyContent: "center" }}>Choose Business →</Link>
           </div>
           <div className="price-card">
             <h3>🟩 ECOMMERCE — Online Shop</h3>
             <div className="amount">KSh 95,000 <small>from</small></div>
             <p style={{ color: "var(--muted)", fontSize: 14 }}>Sell online with M-Pesa &amp; delivery.</p>
             <ul><li>Up to 200 products</li><li>M-Pesa STK Push + cards</li><li>Delivery zones, discounts</li><li>Order SMS + accounts</li><li>Product SEO</li><li>Delivery: 4–5 weeks</li></ul>
-            <Link href="/contact" className="btn btn-navy" style={{ justifyContent: "center" }}>Choose Ecommerce →</Link>
+            <Link href="/quote" className="btn btn-navy" style={{ justifyContent: "center" }}>Choose Ecommerce →</Link>
           </div>
         </div>
         <div className="grid-2">

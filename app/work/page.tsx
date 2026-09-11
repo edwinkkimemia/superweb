@@ -51,6 +51,7 @@ export default function WorkPage() {
           title="Want results like these for your business?"
           text="Send your current website (or business name). Free audit + fixed KSh quotation in 24 hours."
           btnLabel="Start My Project →"
+          btnHref="/quote"
         />
       </div>
     </section>

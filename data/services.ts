@@ -113,6 +113,7 @@ export const SERVICE_OPTIONS = [
   "Cybersecurity Services",
   "IT Support & Maintenance",
   "Graphic & Visual Design",
+  "General Enquiry",
 ];
 
 /** Maps a service page slug → the form dropdown option preselected on that page. */

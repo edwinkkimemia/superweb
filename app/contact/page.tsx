@@ -4,9 +4,9 @@ import LeadForm from "@/components/forms/LeadForm";
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Us – Get a Free Website Quote in Kenya | 0715135141",
+  title: "Contact Us – Questions, Support & Partnerships | SuperWeb Nairobi",
   description:
-    "Contact SuperWeb Nairobi for website design Kenya quotes: call 0715135141, email info@superweb.co.ke or request online. Fixed KSh price + timeline in 24 hours. Free homepage audit.",
+    "Contact SuperWeb Nairobi: questions about our work, support on an existing project or partnerships. Call 0715135141 or send a message — same-day reply. For prices, get a free quote.",
   alternates: { canonical: `${SITE_URL}/contact` },
 };
 
@@ -15,12 +15,13 @@ export default function ContactPage() {
     <section className="section" style={{ paddingTop: 40 }}>
       <div className="wrap">
         <div className="crumbs"><Link href="/">Home</Link> / Contact</div>
-        <p className="kicker">Get a free website quote Kenya — reply in 24hrs</p>
-        <h1 className="h2">Talk to Nairobi&apos;s Website Experts Today</h1>
+        <p className="kicker">Contact SuperWeb Nairobi — same-day reply</p>
+        <h1 className="h2">Questions, Support & Partnerships</h1>
         <div className="gold-rule" />
         <p className="lead">
-          Call, WhatsApp or send the form. A senior consultant replies with <strong>price, timeline and honest
-          advice</strong> for your <strong>website, app, cybersecurity, IT support or design project in Kenya</strong>.
+          Call, WhatsApp or send the form about <strong>anything that isn&apos;t a price quote</strong> —
+          support on an existing project, questions about our work, or partnership ideas.{" "}
+          <strong>Need a price?</strong> <Link href="/quote" style={{ color: "var(--blue)", fontWeight: 800 }}>Get a free quote in 2 minutes →</Link>
         </p>
         <div className="contact-grid">
           <div className="contact-info">
@@ -32,11 +33,11 @@ export default function ContactPage() {
             <img src="/images/contact-office.jpg" alt="SuperWeb office Nairobi" style={{ borderRadius: 12, marginTop: 18, border: "1px solid rgba(255,255,255,.2)" }} />
           </div>
           <div className="form-card">
-            <h3>Get my free quote →</h3>
+            <h3>Send us a message →</h3>
             <p style={{ color: "var(--muted)", fontSize: 14, margin: "6px 0 16px" }}>
-              2 minutes. Fixed KSh price in 24 hours. No spam, ever.
+              Same-day reply. No spam, ever. Want prices instead? <Link href="/quote" style={{ color: "var(--blue)", fontWeight: 700 }}>Get a free quote →</Link>
             </p>
-            <LeadForm source="/contact" />
+            <LeadForm source="/contact" projectType="General Enquiry" />
             <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, textAlign: "center" }}>
               By sending, you agree to be contacted about your project.
             </p>
