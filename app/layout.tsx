@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
-import ChatWidget from "@/components/chat/ChatWidget";
+import FloatingWidgets from "@/components/layout/FloatingWidgets";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
 import { FAVICON_SRC, SITE_URL } from "@/lib/site";
 
@@ -44,8 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>{children}</main>
         <Footer />
-        <WhatsAppFloat />
-        <ChatWidget />
+        <FloatingWidgets />
         <PageViewTracker />
       </body>
     </html>
