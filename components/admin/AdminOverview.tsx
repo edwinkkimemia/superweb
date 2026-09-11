@@ -155,6 +155,9 @@ export default function AdminOverview() {
           <a className="btn btn-navy btn-sm" href="/admin/leads">
             📥 Manage Leads →
           </a>
+          <a className="btn btn-outline btn-sm" href="/admin/analytics">
+            📈 View Analytics
+          </a>
           <a className="btn btn-outline btn-sm" href="/admin/settings">
             ⚙️ Open Settings
           </a>

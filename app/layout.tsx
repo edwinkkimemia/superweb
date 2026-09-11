@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
 import ChatWidget from "@/components/chat/ChatWidget";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 import { FAVICON_SRC, SITE_URL } from "@/lib/site";
 
 const OG_TITLE = "Website Design Kenya | Web Design Nairobi – SuperWeb";
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <WhatsAppFloat />
         <ChatWidget />
+        <PageViewTracker />
       </body>
     </html>
   );

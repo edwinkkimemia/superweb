@@ -80,6 +80,29 @@ export const pool: Pool | null = getPool();
 const memoryLeads: Lead[] = [];
 let memoryId = 1;
 
+export interface PageView {
+  id: number;
+  path: string;
+  referrer: string;
+  country: string;
+  device: string;
+  visitorHash: string;
+  createdAt: string;
+}
+
+export interface PageViewInput {
+  path: string;
+  referrer?: string;
+  country?: string;
+  device?: string;
+  visitorHash: string;
+}
+
+// In-memory fallback for analytics (capped).
+const memoryViews: PageView[] = [];
+let memoryViewId = 1;
+const MAX_MEMORY_VIEWS = 5000;
+
 export async function isDbConnected(): Promise<boolean> {
   const p = getPool();
   if (!p) return false;
@@ -132,6 +155,23 @@ export async function ensureTables(): Promise<void> {
   `);
   await p.query(`
     CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires ON admin_sessions (expires_at);
+  `);
+  await p.query(`
+    CREATE TABLE IF NOT EXISTS page_views (
+      id SERIAL PRIMARY KEY,
+      path VARCHAR(255) NOT NULL,
+      referrer VARCHAR(255) NOT NULL DEFAULT '',
+      country VARCHAR(8) NOT NULL DEFAULT '',
+      device VARCHAR(16) NOT NULL DEFAULT '',
+      visitor_hash CHAR(64) NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+  await p.query(`
+    CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views (created_at DESC);
+  `);
+  await p.query(`
+    CREATE INDEX IF NOT EXISTS idx_page_views_path ON page_views (path);
   `);
 }
 
@@ -506,6 +546,216 @@ export async function isRequestAuthorized(req: Request): Promise<boolean> {
 /** Read the session cookie from a request. */
 export function getSessionCookie(req: Request): string {
   return getCookie(req, ADMIN_COOKIE);
+}
+
+export async function trackPageView(input: PageViewInput): Promise<void> {
+  const path = (input.path || "/").slice(0, 255);
+  if (!path.startsWith("/")) return;
+  const row = {
+    path,
+    referrer: (input.referrer || "").slice(0, 255),
+    country: (input.country || "").slice(0, 8),
+    device: input.device === "mobile" ? "mobile" : "desktop",
+    visitorHash: input.visitorHash,
+  };
+  const p = getPool();
+  if (!p) {
+    memoryViews.unshift({ ...row, id: memoryViewId++, createdAt: new Date().toISOString() });
+    if (memoryViews.length > MAX_MEMORY_VIEWS) memoryViews.length = MAX_MEMORY_VIEWS;
+    return;
+  }
+  try {
+    await p.query(
+      `INSERT INTO page_views (path, referrer, country, device, visitor_hash)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [row.path, row.referrer, row.country, row.device, row.visitorHash]
+    );
+  } catch (err) {
+    // Fresh DB without tables — create once and retry; otherwise log and drop the hit.
+    if ((err as { code?: string })?.code === "42P01") {
+      try {
+        await ensureTables();
+        await p.query(
+          `INSERT INTO page_views (path, referrer, country, device, visitor_hash)
+           VALUES ($1, $2, $3, $4, $5)`,
+          [row.path, row.referrer, row.country, row.device, row.visitorHash]
+        );
+        return;
+      } catch (err2) {
+        handleDbReadError(err2);
+        return;
+      }
+    }
+    handleDbReadError(err);
+  }
+}
+
+export interface AnalyticsSummary {
+  totalViews: number;
+  todayViews: number;
+  last7Views: number;
+  last30Views: number;
+  uniqueToday: number;
+  unique7: number;
+  daily: Array<{ date: string; views: number; uniques: number }>;
+  topPages: Array<{ path: string; views: number }>;
+  topReferrers: Array<{ ref: string; views: number }>;
+  byCountry: Array<{ country: string; views: number }>;
+  byDevice: Array<{ device: string; views: number }>;
+}
+
+const EMPTY_SUMMARY: AnalyticsSummary = {
+  totalViews: 0,
+  todayViews: 0,
+  last7Views: 0,
+  last30Views: 0,
+  uniqueToday: 0,
+  unique7: 0,
+  daily: [],
+  topPages: [],
+  topReferrers: [],
+  byCountry: [],
+  byDevice: [],
+};
+
+function summarizeViews(
+  views: Array<{ path: string; referrer: string; country: string; device: string; visitorHash: string; createdAt: Date }>
+): AnalyticsSummary {
+  const now = new Date();
+  const day = (d: Date) => d.toISOString().slice(0, 10);
+  const today = day(now);
+  const d7 = new Date(now.getTime() - 7 * 24 * 3600 * 1000);
+  const d30 = new Date(now.getTime() - 30 * 24 * 3600 * 1000);
+  const inDay = new Map<string, { views: number; uniq: Set<string> }>();
+  const pages = new Map<string, number>();
+  const refs = new Map<string, number>();
+  const countries = new Map<string, number>();
+  const devices = new Map<string, number>();
+  let todayViews = 0;
+  let last7Views = 0;
+  let last30Views = 0;
+  const uniqToday = new Set<string>();
+  const uniq7 = new Set<string>();
+  for (const v of views) {
+    const key = day(v.createdAt);
+    let bucket = inDay.get(key);
+    if (!bucket) {
+      bucket = { views: 0, uniq: new Set() };
+      inDay.set(key, bucket);
+    }
+    bucket.views++;
+    bucket.uniq.add(v.visitorHash);
+    pages.set(v.path, (pages.get(v.path) ?? 0) + 1);
+    if (v.referrer) refs.set(v.referrer, (refs.get(v.referrer) ?? 0) + 1);
+    countries.set(v.country || "—", (countries.get(v.country || "—") ?? 0) + 1);
+    devices.set(v.device || "desktop", (devices.get(v.device || "desktop") ?? 0) + 1);
+    if (key === today) {
+      todayViews++;
+      uniqToday.add(v.visitorHash);
+    }
+    if (v.createdAt >= d7) {
+      last7Views++;
+      uniq7.add(v.visitorHash);
+    }
+    if (v.createdAt >= d30) last30Views++;
+  }
+  const topPaths = [...pages.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([path, views]) => ({ path, views }));
+  const topRefs = [...refs.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([ref, views]) => ({ ref, views }));
+  const topCountries = [...countries.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([country, views]) => ({ country, views }));
+  const topDevices = [...devices.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4)
+    .map(([device, views]) => ({ device, views }));
+  return {
+    totalViews: views.length,
+    todayViews,
+    last7Views,
+    last30Views,
+    uniqueToday: uniqToday.size,
+    unique7: uniq7.size,
+    daily: [...inDay.entries()]
+      .sort((a, b) => (a[0] < b[0] ? -1 : 1))
+      .slice(-14)
+      .map(([date, b]) => ({ date, views: b.views, uniques: b.uniq.size })),
+    topPages: topPaths,
+    topReferrers: topRefs,
+    byCountry: topCountries,
+    byDevice: topDevices,
+  };
+}
+
+export async function analyticsSummary(): Promise<AnalyticsSummary> {
+  const p = getPool();
+  if (!p) {
+    return summarizeViews(
+      memoryViews.map((v) => ({
+        path: v.path,
+        referrer: v.referrer,
+        country: v.country,
+        device: v.device,
+        visitorHash: v.visitorHash,
+        createdAt: new Date(v.createdAt),
+      }))
+    );
+  }
+  try {
+    const [totals, daily, pages, refs, countries, devices] = await Promise.all([
+      p.query(`
+        SELECT COUNT(*)::int AS total,
+               COUNT(*) FILTER (WHERE created_at >= date_trunc('day', NOW()))::int AS today,
+               COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '7 days')::int AS d7,
+               COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '30 days')::int AS d30,
+               COUNT(DISTINCT visitor_hash) FILTER (WHERE created_at >= date_trunc('day', NOW()))::int AS utoday,
+               COUNT(DISTINCT visitor_hash) FILTER (WHERE created_at >= NOW() - INTERVAL '7 days')::int AS u7
+        FROM page_views`),
+      p.query(`
+        SELECT to_char(created_at, 'YYYY-MM-DD') AS date,
+               COUNT(*)::int AS views,
+               COUNT(DISTINCT visitor_hash)::int AS uniques
+        FROM page_views WHERE created_at >= NOW() - INTERVAL '14 days'
+        GROUP BY 1 ORDER BY 1`),
+      p.query(`SELECT path, COUNT(*)::int AS views FROM page_views GROUP BY path ORDER BY views DESC LIMIT 8`),
+      p.query(`SELECT referrer AS ref, COUNT(*)::int AS views FROM page_views WHERE referrer <> '' GROUP BY referrer ORDER BY views DESC LIMIT 8`),
+      p.query(`SELECT COALESCE(NULLIF(country, ''), '—') AS country, COUNT(*)::int AS views FROM page_views GROUP BY country ORDER BY views DESC LIMIT 8`),
+      p.query(`SELECT device, COUNT(*)::int AS views FROM page_views GROUP BY device ORDER BY views DESC`),
+    ]);
+    const t = totals.rows[0];
+    return {
+      totalViews: t.total,
+      todayViews: t.today,
+      last7Views: t.d7,
+      last30Views: t.d30,
+      uniqueToday: t.utoday,
+      unique7: t.u7,
+      daily: daily.rows,
+      topPages: pages.rows,
+      topReferrers: refs.rows,
+      byCountry: countries.rows,
+      byDevice: devices.rows,
+    };
+  } catch (err) {
+    if ((err as { code?: string })?.code === "42P01") {
+      try {
+        await ensureTables();
+        return EMPTY_SUMMARY;
+      } catch (err2) {
+        handleDbReadError(err2);
+        return EMPTY_SUMMARY;
+      }
+    }
+    handleDbReadError(err);
+    if (!isConnectionError(err)) throw err;
+    return EMPTY_SUMMARY;
+  }
 }
 
 // Simple in-memory rate limit for lead submissions.

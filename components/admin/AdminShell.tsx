@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { clearAdminEmail } from "@/lib/admin";
 import { countBuckets, LEAD_BUCKETS, type LeadBucket } from "@/lib/leadBuckets";
 
-const TOP_LINKS = [{ href: "/admin/overview", label: "📊 Overview" }];
+const TOP_LINKS = [
+  { href: "/admin/overview", label: "📊 Overview" },
+  { href: "/admin/analytics", label: "📈 Analytics" },
+];
 const BOTTOM_LINKS = [
   { href: "/admin/leads", label: "📥 All Leads" },
   { href: "/admin/settings", label: "⚙️ Settings" },

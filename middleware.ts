@@ -30,6 +30,7 @@ export const config = {
   matcher: [
     "/admin",
     "/admin/overview/:path*",
+    "/admin/analytics/:path*",
     "/admin/quotes/:path*",
     "/admin/schedules/:path*",
     "/admin/messages/:path*",

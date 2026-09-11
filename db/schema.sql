@@ -36,6 +36,19 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
 
 CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires ON admin_sessions (expires_at);
 
+CREATE TABLE IF NOT EXISTS page_views (
+  id SERIAL PRIMARY KEY,
+  path VARCHAR(255) NOT NULL,
+  referrer VARCHAR(255) NOT NULL DEFAULT '',
+  country VARCHAR(8) NOT NULL DEFAULT '',
+  device VARCHAR(16) NOT NULL DEFAULT '',
+  visitor_hash CHAR(64) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_page_views_path ON page_views (path);
+
 CREATE TABLE IF NOT EXISTS projects (
   slug VARCHAR(80) PRIMARY KEY,
   title VARCHAR(120) NOT NULL,
