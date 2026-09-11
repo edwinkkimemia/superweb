@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { useAdminGuard } from "@/components/admin/AdminGuard";
-import { adminHeaders, getAdminSettings, withTokenQuery } from "@/lib/admin";
+import { getAdminSettings } from "@/lib/admin";
 import type { Lead } from "@/lib/types";
 
 const STAGES = ["new", "contacted", "quoted", "won", "lost"];
@@ -23,15 +23,15 @@ function pill(s: string) {
 }
 
 export default function AdminLeads() {
-  const { token, checking, db } = useAdminGuard();
+  const { checking, db } = useAdminGuard();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [query, setQuery] = useState("");
   const [stageFilter, setStageFilter] = useState("");
   const [error, setError] = useState("");
 
-  const loadLeads = useCallback(async (t: string) => {
+  const loadLeads = useCallback(async () => {
     try {
-      const res = await fetch(withTokenQuery("/api/leads", t), { headers: adminHeaders(t) });
+      const res = await fetch("/api/leads");
       if (!res.ok) throw new Error("Failed to load leads.");
       const json = (await res.json()) as { leads: Lead[] };
       setLeads(json.leads ?? []);
@@ -43,20 +43,20 @@ export default function AdminLeads() {
 
   useEffect(() => {
     if (checking) return;
-    void loadLeads(token);
-  }, [checking, token, loadLeads]);
+    void loadLeads();
+  }, [checking, loadLeads]);
 
   async function setStage(id: number, status: string) {
     try {
       const res = await fetch(`/api/leads/${id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json", ...adminHeaders(token) },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status }),
       });
       if (!res.ok) throw new Error();
       setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status } : l)));
     } catch {
-      alert("Could not update stage. Check admin token.");
+      alert("Could not update stage. Please sign in again.");
     }
   }
 
@@ -102,7 +102,7 @@ export default function AdminLeads() {
             </option>
           ))}
         </select>
-        <button className="btn btn-navy btn-sm" onClick={() => void loadLeads(token)}>
+        <button className="btn btn-navy btn-sm" onClick={() => void loadLeads()}>
           ↻ Refresh
         </button>
       </div>

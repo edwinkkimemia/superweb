@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { clearAdminEmail, clearAdminToken, getAdminToken, withTokenQuery } from "@/lib/admin";
+import { clearAdminEmail } from "@/lib/admin";
 
 const LINKS = [
   { href: "/admin/overview", label: "📊 Overview" },
@@ -27,14 +27,12 @@ export default function AdminShell({
       /* cookie clears on next login anyway */
     }
     clearAdminEmail();
-    clearAdminToken();
     router.push("/admin/login");
     router.refresh();
   }
 
   function exportCsv() {
-    const token = getAdminToken();
-    window.open(withTokenQuery("/api/leads.csv", token), "_blank");
+    window.open("/api/leads.csv", "_blank");
   }
 
   return (

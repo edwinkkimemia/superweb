@@ -37,6 +37,7 @@ export default function LeadForm({
       budget: String(data.get("budget") ?? BUDGET_OPTIONS[4]),
       message: String(data.get("message") ?? "").trim() || undefined,
       sourcePage: source,
+      websiteUrl: String(data.get("website_url") ?? "").trim() || undefined,
     };
     if (payload.name.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
       setStatus("error");
@@ -133,6 +134,15 @@ export default function LeadForm({
             />
           </div>
         )}
+        {/* Honeypot — bots fill it, humans never see it. */}
+        <input
+          type="text"
+          name="website_url"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0 }}
+        />
       </div>
       <p className={`form-msg${status === "error" ? " err" : ""}`} style={{ marginTop: 10 }}>
         {message}

@@ -30,6 +30,11 @@ export async function POST(req: Request) {
   if (!parsed.ok) {
     return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
   }
+  // Honeypot: bots fill the hidden field — pretend success without saving.
+  const raw = body as Record<string, unknown>;
+  if (String(raw.websiteUrl ?? raw.website_url ?? "").trim()) {
+    return NextResponse.json({ ok: true, lead: { id: 0 } }, { status: 201 });
+  }
   try {
     const lead = await createLead(parsed.value);
     return NextResponse.json({ ok: true, lead }, { status: 201 });

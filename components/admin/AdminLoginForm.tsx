@@ -71,9 +71,6 @@ export default function AdminLoginForm() {
           {busy ? "Signing in…" : "Sign In →"}
         </button>
       </form>
-      <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
-        Dev mode: if no admin email/password is set on the server, leave both empty and click Sign In.
-      </p>
     </div>
   );
 }

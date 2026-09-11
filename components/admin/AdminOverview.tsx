@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { useAdminGuard } from "@/components/admin/AdminGuard";
-import { adminHeaders, withTokenQuery } from "@/lib/admin";
 import type { LeadStats } from "@/lib/types";
 
 function pill(s: string) {
@@ -21,7 +20,7 @@ function pill(s: string) {
 }
 
 export default function AdminOverview() {
-  const { token, checking, db } = useAdminGuard();
+  const { checking, db } = useAdminGuard();
   const [stats, setStats] = useState<LeadStats | null>(null);
   const [error, setError] = useState("");
 
@@ -29,11 +28,11 @@ export default function AdminOverview() {
     if (checking) return;
     void load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checking, token]);
+  }, [checking]);
 
   async function load() {
     try {
-      const res = await fetch(withTokenQuery("/api/stats", token), { headers: adminHeaders(token) });
+      const res = await fetch("/api/stats");
       if (!res.ok) throw new Error("Could not load stats.");
       const json = (await res.json()) as { stats: LeadStats };
       setStats(json.stats);

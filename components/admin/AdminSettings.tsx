@@ -6,17 +6,15 @@ import AdminShell from "@/components/admin/AdminShell";
 import { useAdminGuard } from "@/components/admin/AdminGuard";
 import {
   clearAdminEmail,
-  clearAdminToken,
   DEFAULT_SETTINGS,
   getAdminEmail,
   getAdminSettings,
   saveAdminSettings,
-  withTokenQuery,
   type AdminSettings as Settings,
 } from "@/lib/admin";
 
 export default function AdminSettings() {
-  const { token, checking, db } = useAdminGuard();
+  const { checking, db } = useAdminGuard();
   const router = useRouter();
   const [form, setForm] = useState<Settings>(DEFAULT_SETTINGS);
   const [saved, setSaved] = useState("");
@@ -51,7 +49,6 @@ export default function AdminSettings() {
       /* cookie clears on next login anyway */
     }
     clearAdminEmail();
-    clearAdminToken();
     router.push("/admin/login");
     router.refresh();
   }
@@ -120,7 +117,7 @@ export default function AdminSettings() {
         <div className="card" style={{ marginTop: 18 }}>
           <h3>🔐 Security</h3>
           <p style={{ color: "var(--muted)", fontSize: 14 }}>
-            Signed in{adminEmail ? <> as <code>{adminEmail}</code></> : " (dev mode)"}.
+            Signed in{adminEmail ? <> as <code>{adminEmail}</code></> : ""}.
             Pages are locked server-side — set <code>ADMIN_EMAIL</code> / <code>ADMIN_PASSWORD</code> in{" "}
             <code>.env</code> to enforce login in production.
           </p>
@@ -134,7 +131,7 @@ export default function AdminSettings() {
             <button
               type="button"
               className="btn btn-outline btn-sm"
-              onClick={() => window.open(withTokenQuery("/api/leads.csv", token), "_blank")}
+              onClick={() => window.open("/api/leads.csv", "_blank")}
             >
               ⬇️ Export CSV
             </button>

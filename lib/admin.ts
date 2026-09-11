@@ -1,6 +1,5 @@
 "use client";
 
-export const ADMIN_TOKEN_KEY = "sw_admin_token";
 export const ADMIN_SETTINGS_KEY = "sw_admin_settings";
 export const ADMIN_EMAIL_KEY = "sw_admin_email";
 
@@ -22,19 +21,6 @@ export const DEFAULT_SETTINGS: AdminSettings = {
   autoReply: false,
 };
 
-export function getAdminToken(): string {
-  if (typeof window === "undefined") return "";
-  return localStorage.getItem(ADMIN_TOKEN_KEY) ?? "";
-}
-
-export function setAdminToken(t: string) {
-  localStorage.setItem(ADMIN_TOKEN_KEY, t);
-}
-
-export function clearAdminToken() {
-  localStorage.removeItem(ADMIN_TOKEN_KEY);
-}
-
 export function getAdminEmail(): string {
   if (typeof window === "undefined") return "";
   return localStorage.getItem(ADMIN_EMAIL_KEY) ?? "";
@@ -46,16 +32,6 @@ export function setAdminEmail(e: string) {
 
 export function clearAdminEmail() {
   localStorage.removeItem(ADMIN_EMAIL_KEY);
-}
-
-export function adminHeaders(token: string): Record<string, string> {
-  return token ? { "x-admin-token": token } : {};
-}
-
-export function withTokenQuery(url: string, token: string): string {
-  if (!token) return url;
-  const sep = url.includes("?") ? "&" : "?";
-  return `${url}${sep}token=${encodeURIComponent(token)}`;
 }
 
 export function getAdminSettings(): AdminSettings {
