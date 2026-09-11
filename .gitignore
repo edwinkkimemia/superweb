@@ -3,3 +3,13 @@ dist/
 .env
 *.log
 .DS_Store
+
+.vercel
+.env*
+!.env.example
+
+# Next.js build output — never commit (stale cache breaks fresh builds)
+.next/
+
+# TypeScript incremental info
+*.tsbuildinfo

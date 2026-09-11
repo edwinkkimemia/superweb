@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import AdminShell from "@/components/admin/AdminShell";
 import { useAdminGuard } from "@/components/admin/AdminGuard";
 import {
+  clearAdminEmail,
   clearAdminToken,
   DEFAULT_SETTINGS,
+  getAdminEmail,
   getAdminSettings,
-  getAdminToken,
   saveAdminSettings,
   withTokenQuery,
   type AdminSettings as Settings,
@@ -19,11 +20,11 @@ export default function AdminSettings() {
   const router = useRouter();
   const [form, setForm] = useState<Settings>(DEFAULT_SETTINGS);
   const [saved, setSaved] = useState("");
-  const [currentToken, setCurrentToken] = useState("");
+  const [adminEmail, setAdminEmailState] = useState("");
 
   useEffect(() => {
     setForm(getAdminSettings());
-    setCurrentToken(getAdminToken());
+    setAdminEmailState(getAdminEmail());
   }, [checking]);
 
   function update<K extends keyof Settings>(k: K, v: Settings[K]) {
@@ -49,6 +50,7 @@ export default function AdminSettings() {
     } catch {
       /* cookie clears on next login anyway */
     }
+    clearAdminEmail();
     clearAdminToken();
     router.push("/admin/login");
     router.refresh();
@@ -118,9 +120,9 @@ export default function AdminSettings() {
         <div className="card" style={{ marginTop: 18 }}>
           <h3>🔐 Security</h3>
           <p style={{ color: "var(--muted)", fontSize: 14 }}>
-            Signed in{currentToken ? <> with token <code>{`${currentToken.slice(0, 6)}••••`}</code></> : " (dev mode)"}.
-            Pages are locked server-side — set <code>ADMIN_TOKEN</code> in <code>.env</code> to enforce it
-            in production.
+            Signed in{adminEmail ? <> as <code>{adminEmail}</code></> : " (dev mode)"}.
+            Pages are locked server-side — set <code>ADMIN_EMAIL</code> / <code>ADMIN_PASSWORD</code> in{" "}
+            <code>.env</code> to enforce login in production.
           </p>
           <div style={{ display: "flex", gap: 10, marginTop: 14, flexWrap: "wrap" }}>
             <button type="submit" className="btn btn-navy btn-sm">

@@ -52,7 +52,6 @@ export default function Footer() {
             <Link href="/pricing">Pricing</Link>
             <Link href="/about">About Us</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/admin/login">Client Login</Link>
           </div>
           <div>
             <h4>Schedule a Meeting</h4>

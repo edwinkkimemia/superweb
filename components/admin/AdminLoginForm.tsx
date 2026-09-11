@@ -1,34 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getAdminToken, setAdminToken } from "@/lib/admin";
+import { setAdminEmail } from "@/lib/admin";
 
 export default function AdminLoginForm() {
   const router = useRouter();
-  const [token, setToken] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    const saved = getAdminToken();
-    if (saved) setToken(saved);
-  }, []);
-
   async function unlock(e?: React.FormEvent) {
     e?.preventDefault();
-    const t = token.trim();
     setBusy(true);
-    setMsg("Unlocking…");
+    setMsg("Signing in…");
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: t }),
+        body: JSON.stringify({ email: email.trim(), password }),
       });
       const json = (await res.json()) as { ok: boolean; error?: string };
       if (!res.ok || !json.ok) throw new Error(json.error ?? "Login failed.");
-      setAdminToken(t);
+      setAdminEmail(email.trim());
       setMsg("");
       router.push("/admin/overview");
       router.refresh();
@@ -43,16 +38,26 @@ export default function AdminLoginForm() {
     <div className="login-card">
       <h3>🔐 Admin access</h3>
       <p style={{ color: "var(--muted)", fontSize: 14, margin: "6px 0 14px" }}>
-        Sign in with your admin token. A secure session keeps you logged in on this browser.
+        Sign in with your admin email and password.
       </p>
       <form onSubmit={(e) => void unlock(e)}>
         <div className="field">
-          <label>Admin token</label>
+          <label>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@superweb.co.ke"
+            autoComplete="username"
+          />
+        </div>
+        <div className="field" style={{ marginTop: 10 }}>
+          <label>Password</label>
           <input
             type="password"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            placeholder="superweb-admin-..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
             autoComplete="current-password"
           />
         </div>
@@ -63,11 +68,11 @@ export default function AdminLoginForm() {
           type="submit"
           disabled={busy}
         >
-          {busy ? "Unlocking…" : "Unlock Dashboard →"}
+          {busy ? "Signing in…" : "Sign In →"}
         </button>
       </form>
       <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
-        Dev mode: if no ADMIN_TOKEN is set on the server, leave this empty and click Unlock.
+        Dev mode: if no admin email/password is set on the server, leave both empty and click Sign In.
       </p>
     </div>
   );

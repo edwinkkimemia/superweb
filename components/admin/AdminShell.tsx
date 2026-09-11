@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { clearAdminToken, getAdminToken, withTokenQuery } from "@/lib/admin";
+import { clearAdminEmail, clearAdminToken, getAdminToken, withTokenQuery } from "@/lib/admin";
 
 const LINKS = [
   { href: "/admin/overview", label: "📊 Overview" },
@@ -26,6 +26,7 @@ export default function AdminShell({
     } catch {
       /* cookie clears on next login anyway */
     }
+    clearAdminEmail();
     clearAdminToken();
     router.push("/admin/login");
     router.refresh();

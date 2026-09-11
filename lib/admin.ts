@@ -2,6 +2,7 @@
 
 export const ADMIN_TOKEN_KEY = "sw_admin_token";
 export const ADMIN_SETTINGS_KEY = "sw_admin_settings";
+export const ADMIN_EMAIL_KEY = "sw_admin_email";
 
 export interface AdminSettings {
   businessName: string;
@@ -32,6 +33,19 @@ export function setAdminToken(t: string) {
 
 export function clearAdminToken() {
   localStorage.removeItem(ADMIN_TOKEN_KEY);
+}
+
+export function getAdminEmail(): string {
+  if (typeof window === "undefined") return "";
+  return localStorage.getItem(ADMIN_EMAIL_KEY) ?? "";
+}
+
+export function setAdminEmail(e: string) {
+  localStorage.setItem(ADMIN_EMAIL_KEY, e);
+}
+
+export function clearAdminEmail() {
+  localStorage.removeItem(ADMIN_EMAIL_KEY);
 }
 
 export function adminHeaders(token: string): Record<string, string> {

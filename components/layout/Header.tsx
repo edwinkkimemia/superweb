@@ -44,6 +44,9 @@ export default function Header() {
           <div className="tb-right">
             <span>Mon–Sat 8am–8pm EAT</span>
             <a href={PHONE_HREF}>📞 {PHONE_DISPLAY}</a>
+            <Link href="/contact" className="tb-quote">
+              Get a Quote →
+            </Link>
           </div>
         </div>
       </div>

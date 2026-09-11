@@ -1,9 +1,0 @@
-{
-  "/services/[slug]/page": "app/services/[slug]/page.js",
-  "/work/page": "app/work/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/admin/overview/page": "app/admin/overview/page.js",
-  "/admin/leads/page": "app/admin/leads/page.js",
-  "/admin/settings/page": "app/admin/settings/page.js",
-  "/admin/login/page": "app/admin/login/page.js"
-}
