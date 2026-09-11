@@ -1,4 +1,5 @@
-export const SITE_URL = (process.env.SITE_URL ?? "https://superweb.co.ke").replace(/\/$/, "");
+const rawSiteUrl = (process.env.SITE_URL ?? "").trim();
+export const SITE_URL = (rawSiteUrl || "https://superweb.co.ke").replace(/\/$/, "");
 export const PHONE_DISPLAY = "0715135141";
 export const PHONE_HREF = "tel:0715135141";
 export const PHONE_INTL = "254715135141";
