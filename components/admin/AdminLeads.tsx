@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { AdminGateError, useAdminGuard } from "@/components/admin/AdminGuard";
 import { getAdminSettings } from "@/lib/admin";
+import { bucketForSource, LEAD_BUCKETS, type LeadBucket } from "@/lib/leadBuckets";
 import type { Lead } from "@/lib/types";
 
 const STAGES = ["new", "contacted", "quoted", "won", "lost"];
@@ -22,8 +23,8 @@ function pill(s: string) {
   return <span className={`status ${cls}`}>{s}</span>;
 }
 
-export default function AdminLeads() {
-  const { checking, db, error: guardError } = useAdminGuard();
+export default function AdminLeads({ bucket }: { bucket?: LeadBucket | null }) {
+  const { checking, error: guardError } = useAdminGuard();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [query, setQuery] = useState("");
   const [stageFilter, setStageFilter] = useState("");
@@ -64,7 +65,11 @@ export default function AdminLeads() {
   if (guardError) return <AdminGateError message={guardError} />;
 
   const limit = getAdminSettings().leadsPerPage || 50;
-  const filtered = leads
+  const bucketDef = bucket ? LEAD_BUCKETS.find((b) => b.id === bucket) : undefined;
+  const inBucket = bucket
+    ? leads.filter((l) => bucketForSource(l.sourcePage) === bucket)
+    : leads;
+  const filtered = inBucket
     .filter((l) => {
       if (stageFilter && l.status !== stageFilter) return false;
       if (!query) return true;
@@ -75,7 +80,7 @@ export default function AdminLeads() {
     .slice(0, limit);
 
   return (
-    <AdminShell db={db}>
+    <AdminShell>
       {error && <p className="form-msg err">{error}</p>}
       <div className="card" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
         <input
@@ -168,7 +173,8 @@ export default function AdminLeads() {
         </table>
       </div>
       <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
-        Showing {filtered.length} of {leads.length} leads (page size set in Settings).
+        Showing {filtered.length} of {inBucket.length}
+        {bucketDef ? ` ${bucketDef.label.toLowerCase()}` : " leads"} (page size set in Settings).
       </p>
     </AdminShell>
   );

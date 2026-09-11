@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AdminLoginForm from "@/components/admin/AdminLoginForm";
@@ -20,9 +19,6 @@ export default async function AdminLoginPage() {
 
   return (
     <>
-      <div className="crumbs">
-        <Link href="/">Home</Link> / <Link href="/admin">Admin</Link> / Login
-      </div>
       <h1 className="h2">Admin Login</h1>
       <p className="lead">Sign in with your admin email and password.</p>
       <AdminLoginForm />

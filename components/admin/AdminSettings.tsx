@@ -97,7 +97,7 @@ export default function AdminSettings() {
   if (guardError) return <AdminGateError message={guardError} />;
 
   return (
-    <AdminShell db={db}>
+    <AdminShell>
       <form onSubmit={onSave}>
         <div className="grid-2" style={{ marginTop: 0 }}>
           <div className="card">

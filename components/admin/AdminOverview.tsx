@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AdminShell from "@/components/admin/AdminShell";
 import { AdminGateError, useAdminGuard } from "@/components/admin/AdminGuard";
+import { countBuckets, LEAD_BUCKETS } from "@/lib/leadBuckets";
 import type { LeadStats } from "@/lib/types";
 
 function pill(s: string) {
@@ -20,7 +21,7 @@ function pill(s: string) {
 }
 
 export default function AdminOverview() {
-  const { checking, db, error: guardError } = useAdminGuard();
+  const { checking, error: guardError } = useAdminGuard();
   const [stats, setStats] = useState<LeadStats | null>(null);
   const [error, setError] = useState("");
 
@@ -48,7 +49,7 @@ export default function AdminOverview() {
     stats && stats.total > 0 ? `${Math.round(((stats.byStatus["won"] ?? 0) / stats.total) * 100)}%` : "—";
 
   return (
-    <AdminShell db={db}>
+    <AdminShell>
       {error && <p className="form-msg err">{error}</p>}
       <div className="stat-cards">
         <div className="stat">
@@ -115,6 +116,36 @@ export default function AdminOverview() {
                 ))}
             {!stats && <p style={{ color: "var(--muted)" }}>Loading…</p>}
           </div>
+        </div>
+      </div>
+      <div className="card" style={{ marginTop: 18 }}>
+        <h3>Enquiries by type</h3>
+        <p>Each inbox on its own page — work quotes before they cool.</p>
+        <div style={{ marginTop: 10, display: "grid", gap: 8, fontSize: 14 }}>
+          {LEAD_BUCKETS.map((b) => (
+            <a
+              key={b.id}
+              href={b.href}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                borderBottom: "1px solid var(--line)",
+                padding: "8px 0",
+                fontWeight: 700,
+              }}
+            >
+              <span>
+                {b.icon} {b.label}
+              </span>
+              <span>
+                <strong style={{ marginRight: 8 }}>
+                  {stats ? countBuckets(stats.bySource)[b.id] : "—"}
+                </strong>
+                <span style={{ color: "var(--blue)" }}>Open →</span>
+              </span>
+            </a>
+          ))}
         </div>
       </div>
       <div className="card" style={{ marginTop: 18 }}>

@@ -2,23 +2,45 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { clearAdminEmail } from "@/lib/admin";
+import { countBuckets, LEAD_BUCKETS, type LeadBucket } from "@/lib/leadBuckets";
 
-const LINKS = [
-  { href: "/admin/overview", label: "📊 Overview" },
-  { href: "/admin/leads", label: "📥 Leads" },
+const TOP_LINKS = [{ href: "/admin/overview", label: "📊 Overview" }];
+const BOTTOM_LINKS = [
+  { href: "/admin/leads", label: "📥 All Leads" },
   { href: "/admin/settings", label: "⚙️ Settings" },
 ];
 
+function navActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(href + "/") ? "active" : "";
+}
+
 export default function AdminShell({
   children,
-  db,
 }: {
   children: React.ReactNode;
-  db?: boolean | null;
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [counts, setCounts] = useState<Record<LeadBucket, number> | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/stats");
+        if (!res.ok) return;
+        const json = (await res.json()) as { stats?: { bySource?: Record<string, number> } };
+        if (!cancelled && json.stats?.bySource) setCounts(countBuckets(json.stats.bySource));
+      } catch {
+        /* counts stay hidden */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
 
   async function lock() {
     try {
@@ -31,37 +53,33 @@ export default function AdminShell({
     router.refresh();
   }
 
-  function exportCsv() {
-    window.open("/api/leads.csv", "_blank");
-  }
-
   return (
     <div className="admin-shell">
       <aside className="admin-side">
         <h4>SuperWeb CRM</h4>
         <nav className="admin-nav">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={pathname === l.href || pathname.startsWith(l.href + "/") ? "active" : ""}
-            >
+          {TOP_LINKS.map((l) => (
+            <Link key={l.href} href={l.href} className={navActive(pathname, l.href)}>
+              {l.label}
+            </Link>
+          ))}
+          {LEAD_BUCKETS.map((b) => (
+            <Link key={b.href} href={b.href} className={navActive(pathname, b.href)}>
+              <span>
+                {b.icon} {b.label}
+              </span>
+              {counts !== null && <span className="admin-count">{counts[b.id]}</span>}
+            </Link>
+          ))}
+          {BOTTOM_LINKS.map((l) => (
+            <Link key={l.href} href={l.href} className={navActive(pathname, l.href)}>
               {l.label}
             </Link>
           ))}
         </nav>
-        <button onClick={exportCsv}>⬇️ Export CSV</button>
-        <Link href="/" className="admin-ghost">
-          🌐 View Website
-        </Link>
-        <button style={{ marginTop: 10 }} onClick={lock}>
+        <button onClick={lock}>
           🔒 Logout
         </button>
-        {db !== undefined && (
-          <div style={{ marginTop: 16, fontSize: 12, color: "#C9D7FF" }}>
-            {db === null ? "checking db…" : db ? "● PostgreSQL connected" : "○ Memory mode (set DATABASE_URL)"}
-          </div>
-        )}
       </aside>
       <div className="admin-main">{children}</div>
     </div>
