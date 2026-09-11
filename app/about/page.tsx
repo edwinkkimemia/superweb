@@ -41,7 +41,7 @@ export default function AboutPage() {
           <div className="card"><h3>📍 Kenyan context, global standards</h3><p>M-Pesa-first checkout, fast on 3G, support in English/Swahili on phone, WhatsApp and email.</p></div>
           <div className="card"><h3>🤝 Who we serve</h3><p>SMEs, law firms, clinics, schools, hotels, churches, NGOs, ecommerce shops, SACCOs and corporates across Kenya and diaspora.</p></div>
         </div>
-        <CtaBand title="Meet us before you commit." text="Free 20-minute call or Nairobi office visit. We will tell you honestly if you even need a new website." btnLabel="Book Free Call →" />
+        <CtaBand title="Meet us before you commit." text="Free 20-minute call or Nairobi office visit. We will tell you honestly if you even need a new website." btnLabel="Book Free Call →" btnHref="/schedule" />
       </div>
     </section>
   );

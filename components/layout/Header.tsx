@@ -39,10 +39,10 @@ export default function Header() {
       <div className="topbar">
         <div className="topbar-inner">
           <div>
-            📍 Nairobi, Kenya · ✉️ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <span className="tb-loc">📍 Nairobi, Kenya · </span>✉️ <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
           </div>
           <div className="tb-right">
-            <span>Mon–Sat 8am–8pm EAT</span>
+            <span className="tb-hours">Mon–Sat 8am–8pm EAT</span>
             <a href={PHONE_HREF}>📞 {PHONE_DISPLAY}</a>
             <Link href="/contact" className="tb-quote">
               Get a Quote →
