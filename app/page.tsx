@@ -93,7 +93,7 @@ export default function HomePage() {
       <div className="trustbar">
         <div className="trustbar-inner">
           <span className="stars">★★★★★</span>
-          <span><strong>Trusted by SMEs, corporates &amp; startups</strong> across Nairobi, Mombasa, Kisumu, Nakuru &amp; Eldoret</span>
+          <span><strong>Trusted by SMEs, corporates &amp; startups</strong> across Kenya</span>
           <span>·</span><span>M-Pesa Integration</span><span>·</span><span>Google SEO Ready</span><span>·</span><span>1-Year Free Support</span>
         </div>
       </div>
