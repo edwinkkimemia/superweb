@@ -8,7 +8,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Website Design Kenya | Web Design Nairobi – SuperWeb #1 Web Development Company Kenya",
   description:
-    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce, AI solutions, SEO, mobile apps, cybersecurity, IT support & graphic design. Get a free quote: 0715135141.",
+    "SuperWeb is Nairobi's trusted website design company in Kenya. Business websites, ecommerce, AI solutions, SEO, mobile apps, cybersecurity, IT support, graphic design, digital marketing & bulk SMS. Get a free quote: 0715135141.",
   keywords: [
     "website design Kenya",
     "web design Nairobi",
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     "cybersecurity Kenya",
     "IT support Kenya",
     "graphic design Kenya",
+    "digital marketing Kenya",
+    "bulk SMS Kenya",
     "website design prices Kenya",
   ],
   alternates: { canonical: `${SITE_URL}/` },
@@ -104,7 +106,8 @@ export default function HomePage() {
           <p className="lead">
             Stop losing customers to competitors with better websites. SuperWeb is a{" "}
             <strong>web development company in Kenya</strong> offering everything your business needs to win
-            online — websites, ecommerce, AI, SEO, mobile apps, cybersecurity, IT support and design.
+            online — websites, ecommerce, AI, SEO, mobile apps, cybersecurity, IT support, design,
+            digital marketing and bulk SMS.
           </p>
           <div className="grid-3">
             {[
@@ -118,6 +121,8 @@ export default function HomePage() {
               { img: "/images/service-care.jpg", alt: "Cybersecurity services Kenya", icon: "🔒", t: "Cybersecurity Services", d: "Audits, malware cleanup, hardening and monitoring from KSh 45,000. Keep your business safe from hackers.", href: "/services/cybersecurity", cta: "Learn more →" },
               { img: "/images/service-business.jpg", alt: "IT support Kenya", icon: "🖥️", t: "IT Support & Managed IT", d: "Computers, networks, email and backups from KSh 20,000/month. Reliable on-call help for offices and schools.", href: "/services/it-support", cta: "Learn more →" },
               { img: "/images/work-fashion.jpg", alt: "Graphic and visual design Kenya", icon: "🎨", t: "Graphic & Visual Design", d: "Logos, branding, social kits and print from KSh 15,000. Visuals that make your business impossible to ignore.", href: "/services/graphic-design", cta: "Learn more →" },
+              { img: "/images/work-corporate.jpg", alt: "Digital marketing and social media management Kenya", icon: "📣", t: "Digital Marketing & Social Media", d: "Social management, Google & Meta ads from KSh 30,000/month. Content and campaigns that turn followers into M-Pesa sales.", href: "/services/digital-marketing", cta: "Learn more →" },
+              { img: "/images/contact-office.jpg", alt: "Bulk SMS and email marketing Kenya", icon: "📩", t: "Bulk SMS & Email Marketing", d: "Branded SMS, WhatsApp broadcasts and newsletters from KSh 10,000. Perfect for schools, SACCOs, shops and clinics.", href: "/services/bulk-sms", cta: "Learn more →" },
             ].map((c) => (
               <div className="card" key={c.t}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

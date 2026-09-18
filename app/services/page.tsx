@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Our Services – Websites, Apps, Cybersecurity, IT & Design Kenya",
   description:
-    "Full list of SuperWeb services: business websites, ecommerce, AI solutions, SEO, web applications, mobile apps, cybersecurity, IT support, graphic & visual design and maintenance. Prices in KSh.",
+    "Full list of SuperWeb services: business websites, ecommerce, AI solutions, SEO, web applications, mobile apps, cybersecurity, IT support, graphic & visual design, digital marketing, bulk SMS and maintenance. Prices in KSh.",
   alternates: { canonical: `${SITE_URL}/services` },
 };
 
@@ -21,6 +21,8 @@ const SERVICES = [
   { id: "it-support", img: "/images/service-business.jpg", alt: "IT support Kenya", icon: "🖥️", t: "8. IT Support & Managed IT Services", d: "From KSh 20,000/month. Computers, networks, Wi-Fi, business email, backups and on-call help for offices, schools and clinics.", cta: "View service →", href: "/services/it-support" },
   { id: "graphic-design", img: "/images/work-fashion.jpg", alt: "Graphic and visual design Kenya", icon: "🎨", t: "9. Graphic & Visual Design — Branding", d: "From KSh 15,000. Logos, brand kits, social media kits, packaging, company profiles and print design. You own all source files.", cta: "View service →", href: "/services/graphic-design" },
   { id: "care", img: "/images/service-care.jpg", alt: "Website maintenance Kenya", icon: "🛡️", t: "10. Website Maintenance & Hosting Kenya", d: "From KSh 5,000/month. Updates, daily backups, uptime monitoring, hacking recovery & .co.ke domain management.", cta: "View service →", href: "/services/care-plans" },
+  { id: "digital-marketing", img: "/images/work-corporate.jpg", alt: "Digital marketing Kenya", icon: "📣", t: "11. Digital Marketing & Social Media Management", d: "From KSh 30,000/month. Social management, Google & Meta ads, content calendars and monthly reports that grow M-Pesa sales.", cta: "View service →", href: "/services/digital-marketing" },
+  { id: "bulk-sms", img: "/images/contact-office.jpg", alt: "Bulk SMS Kenya", icon: "📩", t: "12. Bulk SMS & Email Marketing Kenya", d: "From KSh 10,000. Branded sender ID, bulk SMS, WhatsApp broadcasts & newsletters for schools, SACCOs, shops and clinics.", cta: "View service →", href: "/services/bulk-sms" },
 ];
 
 export default function ServicesPage() {
@@ -32,8 +34,8 @@ export default function ServicesPage() {
         <h1 className="h2">Website Design Services in Kenya — Everything Your Business Needs to Win Online</h1>
         <div className="gold-rule" />
         <p className="lead">
-          One partner for <strong>website design Kenya, ecommerce development, AI solutions, Google SEO and
-          maintenance</strong>.
+          One partner for <strong>website design Kenya, ecommerce development, AI solutions, Google SEO,
+          digital marketing, bulk SMS and maintenance</strong>.
           Fixed prices in KSh, contracts, and results you can measure in calls, WhatsApps and M-Pesa sales.
         </p>
         <div className="grid-2">

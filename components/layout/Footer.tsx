@@ -44,6 +44,8 @@ export default function Footer() {
             <Link href="/services/cybersecurity">🔒 Cybersecurity</Link>
             <Link href="/services/it-support">🖥️ IT Support</Link>
             <Link href="/services/graphic-design">🎨 Graphic & Visual Design</Link>
+            <Link href="/services/digital-marketing">📣 Digital Marketing</Link>
+            <Link href="/services/bulk-sms">📩 Bulk SMS & Email</Link>
             <Link href="/pricing">Website Prices Kenya</Link>
           </div>
           <div>

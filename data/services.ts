@@ -100,6 +100,24 @@ export const SERVICES: ServiceItem[] = [
     image: "/images/work-fashion.jpg",
     price: "From KSh 15,000",
   },
+  {
+    slug: "digital-marketing",
+    href: "/services/digital-marketing",
+    label: "Digital Marketing & Social Media",
+    short: "Marketing & social from KSh 30,000/mo",
+    icon: "📣",
+    image: "/images/work-corporate.jpg",
+    price: "From KSh 30,000/mo",
+  },
+  {
+    slug: "bulk-sms",
+    href: "/services/bulk-sms",
+    label: "Bulk SMS & Email Marketing",
+    short: "SMS & email from KSh 10,000",
+    icon: "📩",
+    image: "/images/contact-office.jpg",
+    price: "From KSh 10,000",
+  },
 ];
 
 export const SERVICE_OPTIONS = [
@@ -113,6 +131,8 @@ export const SERVICE_OPTIONS = [
   "Cybersecurity Services",
   "IT Support & Maintenance",
   "Graphic & Visual Design",
+  "Digital Marketing & Social Media",
+  "Bulk SMS & Email Marketing",
   "General Enquiry",
 ];
 
@@ -128,4 +148,6 @@ export const SERVICE_FORM_OPTION: Record<string, string> = {
   cybersecurity: "Cybersecurity Services",
   "it-support": "IT Support & Maintenance",
   "graphic-design": "Graphic & Visual Design",
+  "digital-marketing": "Digital Marketing & Social Media",
+  "bulk-sms": "Bulk SMS & Email Marketing",
 };

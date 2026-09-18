@@ -77,7 +77,7 @@ export default function Header() {
             >
               Our Work
             </Link>
-            <Link href="/schedule" className="btn btn-primary btn-sm" onClick={() => setOpen(false)}>
+            <Link href="/schedule" className="btn btn-navy btn-sm" onClick={() => setOpen(false)}>
               📅 Schedule Meeting →
             </Link>
           </nav>
